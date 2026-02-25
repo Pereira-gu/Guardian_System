@@ -1,0 +1,5 @@
+# runtime dependencies
+psutil>=5.9
+
+# if you add tests or linters, consider developer requirements here
+# e.g. pytest, flake8, black
