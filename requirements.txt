@@ -1,0 +1,4 @@
+# Requirements for guardian_system
+# Add any third-party dependencies here
+
+# No external packages required at the moment -- using standard library

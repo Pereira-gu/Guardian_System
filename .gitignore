@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+.env
+venv/
+ENV/
+env/
+.Python
+
+# VS Code
+.vscode/
+
+# SQLite database file
+*.db
+
+# Logs
+logs/
+
+# Dashboards or exported data
+dashboard/
+
+data/raw/
+
+# OS files
+Thumbs.db
+.DS_Store
