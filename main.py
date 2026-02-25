@@ -1,5 +1,6 @@
 import time
-from src import colletor, engine, exporter
+from src import collector
+from src import engine, exporter
 
 
 def rodar_guardian():
@@ -7,7 +8,7 @@ def rodar_guardian():
     print("Iniciando o Guardian...")
 
     while True:
-        processos = colletor.capturar_processos()
+        processos = collector.capturar_processos()
 
         for proc in processos[:10]:
             score = engine.calcular_risco(proc)
