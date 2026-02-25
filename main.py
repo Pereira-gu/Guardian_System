@@ -13,7 +13,14 @@ def rodar_guardian():
         for proc in processos[:10]:
             score = engine.calcular_risco(proc)
 
-            print(f"Monitorando: {proc['name']} | Risco: {score}%")
+            exporter.salvar_log(
+                modulo="Monitoramento de Processos",
+                descricao=f"Processo: {proc['name']} | PID: {proc['pid']}",
+                score_risco=score,
+            )
+
+            print(f"Monitorando: {proc['name']} | Risco: {score}% | Salvo No BD")
+        print("-" * 30)
         time.sleep(60)
 
 
