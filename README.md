@@ -1,44 +1,24 @@
-# Guardian System
+# 🛡️ Guardian System - Endpoint Monitoring & Analysis
 
-Este projeto implementa um sistema de monitoramento/exportação de dados utilizando banco de dados SQLite.
+O **Guardian System** é um sistema de monitorização de segurança modular desenvolvido para detetar e analisar processos em execução no Windows, atribuindo scores de risco e visualizando telemetria em tempo real.
 
-## Estrutura
+## 🚀 Funcionalidades
+- **Coleta Automatizada:** Monitorização de processos via `psutil`.
+- **Análise de Risco:** Motor de regras que identifica processos suspeitos (ex: PowerShell com privilégios).
+- **Pipeline de Dados:** Ingestão de dados em SQLite com tratamento de duplicados.
+- **Visualização BI:** Dashboard interativo em Power BI conectado via ODBC/Python.
 
-- `src/` - código-fonte principal (ex: `exporter.py`)
-- `dashboard/` - artefatos de dashboard
-- `data/` - dados brutos e processados
-- `logs/` - arquivos de log
-- `tests/` - testes automatizados
+## 📊 Dashboard (v1.0)
+*(Aqui você deve tirar um print do seu dashboard no Power BI, guardar na pasta do projeto e linkar assim:)*
+![Dashboard Screenshot](link_da_imagem_aqui.png)
 
-## Instalação
+## 🛠️ Tecnologias Utilizadas
+- **Linguagem:** Python 3.x
+- **Base de Dados:** SQLite
+- **Business Intelligence:** Power BI (ODBC Driver)
+- **Bibliotecas:** `psutil`, `pandas`, `sqlite3`
 
-1. Crie um ambiente virtual (opcional mas recomendado):
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\activate   # Windows
-   ```
-2. Instale dependências:
+## ⚙️ Como Executar
+1. Instale as dependências:
    ```bash
    pip install -r requirements.txt
-   ```
-
-## Configuração
-
-Copie o arquivo `.env.example` ou crie um `.env` com as variáveis de ambiente necessárias.
-
-### Exemplo `.env`
-```
-DATABASE_URL=sqlite:///data/guardian.db
-LOG_LEVEL=INFO
-```
-
-## Uso
-
-Executar o script principal:
-```
-python src\exporter.py
-```
-
-## Contribuição
-
-Sinta-se à vontade para abrir issues e pull requests.
