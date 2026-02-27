@@ -1,6 +1,5 @@
 import time
-from src import collector
-from src import engine, exporter
+from src import engine, exporter, collector
 
 pids_processados = set()
 
