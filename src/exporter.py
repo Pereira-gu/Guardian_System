@@ -1,39 +1,46 @@
 import sqlite3
+import os
+
+DB_PATH = "data/database.db"
 
 
 def inicializar_db():
-    conn = sqlite3.connect("data/database.db")
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS logs_seguranca (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            modulo TEXT,
-            descricao TEXT,
-            score_risco FLOAT
-        )
-    """)
-    conn.commit()
-    conn.close()
+    if not os.path.exists("data"):
+        os.makedirs("data")
 
-
-def salvar_log(modulo, descricao, score_risco):
-    """insere um novo registro de monitoramento no banco de dados"""
-    try:
-        conn = sqlite3.connect("data/database.db")
+    with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
-        cursor.execute(
-            """
-            INSERT INTO logs_seguranca (modulo, descricao, score_risco)
-            VALUES (?, ?, ?)
-        """,
-            (modulo, descricao, score_risco),
-        )
+        # Tabela de Processos
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS logs_seguranca (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                modulo TEXT,
+                descricao TEXT,
+                score_risco INTEGER
+            )
+        """)
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS logs_rede (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                ip_destino TEXT,
+                porta INTEGER,
+                status TEXT
+            )
+        """)
         conn.commit()
-    except Exception as e:
-        print(f"Erro ao salvar log: {e}")
 
 
-if __name__ == "__main__":
-    inicializar_db()
-    print("Banco de dados físico criado com sucesso em /data!")
+def salvar_log(modulo, descricao, score):
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO logs_seguranca (modulo, descricao, score_risco) VALUES (?, ?, ?)",
+                (modulo, descricao, score),
+            )
+            conn.commit()
+    except sqlite3.OperationalError:
+        print("⚠️ Banco ocupado (Power BI lendo?). Tentando novamente na próxima volta.")
