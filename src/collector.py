@@ -8,8 +8,8 @@ def capturar_processos():
     ):
         try:
             processos.append(proc.info)
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
     return processos
 
 

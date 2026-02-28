@@ -1,28 +1,24 @@
 import time
 from src import engine, exporter, collector
 
-pids_processados = set()
-
 
 def rodar_guardian():
     exporter.inicializar_db()
-    pids_processados = set()
+    intervalo = 60  # 1 minuto
+
     print("Iniciando o Guardian...")
 
     while True:
+        proxima_execucao = time.time() + intervalo
         processos = collector.capturar_processos()
+
         for proc in processos:
-            pid = proc["pid"]
             score = engine.calcular_risco(
                 nome=proc["name"],
                 cpu_usage=proc.get("cpu_percent", 0),
                 username=proc.get("username", "unknown"),
             )
-
-            if pid not in pids_processados:
-                pids_processados.add(pid)
-                exporter.salvar_log("Processos", proc["name"], score)
-                print(f"Monitorando: {proc['name']} | Risco: {score}% | Salvo No BD")
+            exporter.salvar_log("Processos", proc.get("name"), score)
 
         conexoes = collector.capturar_conexoes()
         for conn in conexoes:
@@ -31,8 +27,12 @@ def rodar_guardian():
                 f"IP: {conn['ip_destino']}, Porta: {conn['porta']}, Status: {conn['status']}",
                 10,
             )
-        print("-" * 30)
-        time.sleep(60)
+        print(f"✅ Ciclo de telemetria concluído às {time.strftime('%H:%M:%S')}")
+        espera = proxima_execucao - time.time()
+        if espera > 0:
+            time.sleep(espera)
+        else:
+            continue
 
 
 if __name__ == "__main__":

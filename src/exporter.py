@@ -44,3 +44,16 @@ def salvar_log(modulo, descricao, score):
             conn.commit()
     except sqlite3.OperationalError:
         print("⚠️ Banco ocupado (Power BI lendo?). Tentando novamente na próxima volta.")
+
+
+def salvar_rede(ip, porta, status):
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO logs_rede (ip_destino, porta, status) VALUES (?, ?, ?)",
+                (ip, porta, status),
+            )
+            conn.commit()
+    except sqlite3.OperationalError:
+        pass
