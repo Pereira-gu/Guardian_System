@@ -9,7 +9,6 @@ O **Guardian System** é um sistema de monitorização de segurança modular des
 - **Visualização BI:** Dashboard interativo em Power BI conectado via ODBC/Python.
 
 ## 📊 Dashboard (v1.0)
-*(Aqui você deve tirar um print do seu dashboard no Power BI, guardar na pasta do projeto e linkar assim:)*
 ![Dashboard Screenshot](img/Screenshot%202026-02-27%20191414.png)
 
 ## 🛠️ Tecnologias Utilizadas
