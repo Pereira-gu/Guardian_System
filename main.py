@@ -13,16 +13,16 @@ def rodar_guardian():
 
         for proc in processos:
             pid = proc["pid"]
-            score = engine.calcular_risco(proc)
+            score = engine.calcular_risco(
+                nome=proc["name"],
+                cpu_usage=proc.get("cpu_percent", 0),
+                username=proc.get("username", "unknown"),
+            )
 
             if pid not in pids_processados:
                 pids_processados.add(pid)
 
-                exporter.salvar_log(
-                    modulo="Monitoramento de Processos",
-                    descricao=f"Processo Suspeito: {proc['name']} | PID: {pid}",
-                    score_risco=score,
-                )
+                exporter.salvar_log("Processos", proc["name"], score)
                 print(f"Monitorando: {proc['name']} | Risco: {score}% | Salvo No BD")
 
         print("-" * 30)

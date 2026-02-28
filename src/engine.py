@@ -17,7 +17,9 @@ def calcular_risco(nome, cpu_usage=0, username="unknown"):
         score += 10
 
     privilegiados = ["root", "admin", "system"]
-    if username.lower() in privilegiados:
+
+    user = (username or "unknown").lower()
+    if user in privilegiados:
         score += 15
 
     return max(0, min(score, 100))
